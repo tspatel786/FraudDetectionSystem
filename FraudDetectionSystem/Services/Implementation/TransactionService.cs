@@ -47,10 +47,8 @@ namespace FraudDetectionSystem.Services.Implementation
                 new TransactionData
                 {
                     Amount = (float)transaction.Amount,
-
                     PaymentMethod = transaction.PaymentMethod,
-
-                    Hour = transaction.Date.Hour
+                    Hour = transaction.TransactionDate.Hour
                 });
 
             if (prediction.IsFraud)
@@ -59,12 +57,12 @@ namespace FraudDetectionSystem.Services.Implementation
                     new FraudAlert
                     {
                         AlertType = "ML_DETECTED",
-
-                        Reason = $"Probability : {prediction.Probability}",
-
-                        CustomerId = transaction.CustomerId,
-
-                        CreatedOn = DateTime.UtcNow
+                        EntityType = "Customer",
+                        EntityId = transaction.CustomerId,
+                        RiskScore = prediction.Probability * 100,
+                        Description = $"Probability : {prediction.Probability}",
+                        IsResolved = false,
+                        CreatedOnUtc = DateTime.UtcNow
                     });
 
                 return "Fraud Detected by ML.NET";
