@@ -20,5 +20,6 @@ namespace FraudDetectionSystem.Controllers
         {
             return Ok(await _service.GetAllAsync());
         }
+
     }
 }
