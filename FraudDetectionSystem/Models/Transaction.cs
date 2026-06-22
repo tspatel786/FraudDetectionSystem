@@ -7,5 +7,7 @@
         public decimal Amount { get; set; }
         public string PaymentMethod { get; set; }
         public DateTime Date { get; set; }
+        public string InvoiceName { get; set; }
+        public string PaymentName { get; set; }
     }
 }
