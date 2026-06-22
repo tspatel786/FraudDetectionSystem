@@ -27,5 +27,6 @@ namespace FraudDetectionSystem.Controllers
             await _service.AddAsync(customer);
             return Ok("Customer added");
         }
+
     }
 }
