@@ -4,6 +4,7 @@ namespace FraudDetectionSystem.ML.Models
 {
     public class TransactionData
     {
+       
         [LoadColumn(0)]
         public float Amount { get; set; }
 
