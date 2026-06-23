@@ -1,5 +1,13 @@
 @FraudDetectionSystem_HostAddress = https://localhost:7263
 
+### 0. Seed demo data (run once after migration)
+POST {{FraudDetectionSystem_HostAddress}}/api/Seed/demo-data
+Accept: application/json
+
+###
+
+### 0b. Train all ML models (run from terminal: dotnet run -- train-all)
+
 ### 1. Get demo stores
 GET {{FraudDetectionSystem_HostAddress}}/api/Store
 Accept: application/json
