@@ -9,7 +9,10 @@ namespace FraudDetectionSystem.Controllers
     {
         private readonly IEmployeeService _service;
 
-        public EmployeeController(IEmployeeService service) => _service = service;
+        public EmployeeController(IEmployeeService service)
+        {
+            _service = service;
+        }
 
         [HttpGet]
         public async Task<IActionResult> GetAll() => Ok(await _service.GetAllAsync());
