@@ -1,10 +1,6 @@
 using FraudDetectionSystem.Data;
 using FraudDetectionSystem.ML.Prediction;
 using FraudDetectionSystem.ML.Training;
-using FraudDetectionSystem.Repository.Implementation;
-using FraudDetectionSystem.Repository.Interface;
-using FraudDetectionSystem.Services.Implementation;
-using FraudDetectionSystem.Services.Interface;
 using Microsoft.EntityFrameworkCore;
 
 // Train commands (run without starting web server):
@@ -53,29 +49,6 @@ builder.Services.AddSwaggerGen(c =>
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
-
-builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
-builder.Services.AddScoped<ICustomerService, CustomerService>();
-
-builder.Services.AddScoped<ITransactionRepository, TransactionRepository>();
-builder.Services.AddScoped<ITransactionService, TransactionService>();
-
-builder.Services.AddScoped<IFraudAlertRepository, FraudAlertRepository>();
-builder.Services.AddScoped<IFraudAlertService, FraudAlertService>();
-
-builder.Services.AddScoped<IStoreRepository, StoreRepository>();
-builder.Services.AddScoped<IStoreService, StoreService>();
-
-builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
-builder.Services.AddScoped<IEmployeeService, EmployeeService>();
-
-builder.Services.AddScoped<IMonitoringRepository, MonitoringRepository>();
-builder.Services.AddScoped<IMonitoringService, MonitoringService>();
-
-builder.Services.AddScoped<IReportService, ReportService>();
-builder.Services.AddScoped<ISeedService, SeedService>();
-
-builder.Services.AddScoped<IStoreFraudService, StoreFraudService>();
 
 builder.Services.AddSingleton<StoreFraudPredictionService>();
 builder.Services.AddSingleton<CustomerBehaviorPredictionService>();

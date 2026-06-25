@@ -23,7 +23,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Controllers\" />
+    <Folder Include="Migrations\" />
     <Folder Include="MLModels\" />
+    <Folder Include="Repository\Implementation\" />
+    <Folder Include="Repository\Interface\" />
+    <Folder Include="Services\" />
   </ItemGroup>
 
   <ItemGroup>

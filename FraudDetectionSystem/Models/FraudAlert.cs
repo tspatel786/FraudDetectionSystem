@@ -1,8 +1,6 @@
-﻿using FraudDetectionSystem.Models.Common;
-
-namespace FraudDetectionSystem.Models
+﻿namespace FraudDetectionSystem.Models
 {
-    public class FraudAlert : AuditableEntity
+    public class FraudAlert
     {
         public int Id { get; set; }
         public string AlertType { get; set; } = string.Empty;
