@@ -36,7 +36,7 @@ if (args.Length > 0)
             PaymentFraudModelTrainer.Train();
             return;
         case "customer-train":
-            CustomerBehaviorModelTrainer.Train(connectionString);  // ← now uses DB
+            CustomerBehaviorModelTrainer.Train(connectionString);  
             return;
         case "employee-train":
             EmployeeFraudModelTrainer.Train();
@@ -65,6 +65,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 builder.Services.AddScoped<IDashboardRepository, DashboardRepository>();
 builder.Services.AddScoped<IDashboardService, DashboardService>();
+builder.Services.AddScoped<IFraudDetectionService, FraudDetectionService>();
 
 builder.Services.AddSingleton<StoreFraudPredictionService>();
 builder.Services.AddSingleton<CustomerBehaviorPredictionService>();
