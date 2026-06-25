@@ -1,4 +1,6 @@
-﻿namespace FraudDetectionSystem.Services.Interface
+﻿using FraudDetectionSystem.Models.Dtos;
+
+namespace FraudDetectionSystem.Services.Interface
 {
     public interface IDashboardService
     {

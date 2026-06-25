@@ -1,4 +1,6 @@
-﻿namespace FraudDetectionSystem.Repository.Interface
+﻿using FraudDetectionSystem.Models.Dtos;
+
+namespace FraudDetectionSystem.Repository.Interface
 {
     public interface IDashboardRepository
     {

@@ -1,6 +1,10 @@
-using FraudDetectionSystem.Data;
+﻿using FraudDetectionSystem.Data;
 using FraudDetectionSystem.ML.Prediction;
 using FraudDetectionSystem.ML.Training;
+using FraudDetectionSystem.Repository.Implementation;
+using FraudDetectionSystem.Repository.Interface;
+using FraudDetectionSystem.Services.Implementation;
+using FraudDetectionSystem.Services.Interface;
 using Microsoft.EntityFrameworkCore;
 
 // Train commands (run without starting web server):
@@ -9,10 +13,18 @@ using Microsoft.EntityFrameworkCore;
 //   dotnet run -- payment-train
 if (args.Length > 0)
 {
+    var config = new ConfigurationBuilder()
+        .SetBasePath(Directory.GetCurrentDirectory())
+        .AddJsonFile("appsettings.json")
+        .Build();
+
+    var connectionString = config.GetConnectionString("DefaultConnection")
+        ?? throw new InvalidOperationException("DefaultConnection missing in appsettings.json");
+
     switch (args[0].ToLowerInvariant())
     {
         case "train-all":
-            MlTrainingOrchestrator.TrainAll();
+            MlTrainingOrchestrator.TrainAll(connectionString);
             return;
         case "train":
             ModelTrainer.Train();
@@ -24,7 +36,7 @@ if (args.Length > 0)
             PaymentFraudModelTrainer.Train();
             return;
         case "customer-train":
-            CustomerBehaviorModelTrainer.Train();
+            CustomerBehaviorModelTrainer.Train(connectionString);  // ← now uses DB
             return;
         case "employee-train":
             EmployeeFraudModelTrainer.Train();
@@ -50,6 +62,9 @@ builder.Services.AddSwaggerGen(c =>
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(
         builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddScoped<IDashboardRepository, DashboardRepository>();
+builder.Services.AddScoped<IDashboardService, DashboardService>();
 
 builder.Services.AddSingleton<StoreFraudPredictionService>();
 builder.Services.AddSingleton<CustomerBehaviorPredictionService>();

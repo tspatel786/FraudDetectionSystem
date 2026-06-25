@@ -1,5 +1,7 @@
 ﻿using FraudDetectionSystem.Data;
+using FraudDetectionSystem.Models.Dtos;
 using FraudDetectionSystem.Repository.Interface;
+using Microsoft.EntityFrameworkCore;
 
 namespace FraudDetectionSystem.Repository.Implementation
 {

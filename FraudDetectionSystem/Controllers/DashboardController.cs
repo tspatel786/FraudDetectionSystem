@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FraudDetectionSystem.Services.Interface;
+using Microsoft.AspNetCore.Mvc;
 
 namespace FraudDetectionSystem.Controllers
 {

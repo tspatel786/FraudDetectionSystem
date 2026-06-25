@@ -1,4 +1,6 @@
-﻿using FraudDetectionSystem.Services.Interface;
+﻿using FraudDetectionSystem.Models.Dtos;
+using FraudDetectionSystem.Repository.Interface;
+using FraudDetectionSystem.Services.Interface;
 
 namespace FraudDetectionSystem.Services.Implementation
 {
@@ -13,7 +15,7 @@ namespace FraudDetectionSystem.Services.Implementation
 
         public async Task<List<FraudAlertResponse>> GetFraudAlertsAsync()
         {
-            return await _repository.GetFraudAlertsAsync();
+            return await _dashboardRepository.GetFraudAlertsAsync();
         }
     }
 }

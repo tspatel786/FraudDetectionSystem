@@ -2,12 +2,14 @@ namespace FraudDetectionSystem.ML.Training
 {
     public static class MlTrainingOrchestrator
     {
-        public static void TrainAll()
+        public static void TrainAll(string connectionString)
         {
             Console.WriteLine("Training all ML.NET fraud models...\n");
-            StoreFraudModelTrainer.Train();
+
+            CustomerBehaviorModelTrainer.Train(connectionString);
             Console.WriteLine();
-            CustomerBehaviorModelTrainer.Train();
+
+            StoreFraudModelTrainer.Train();
             Console.WriteLine();
             PaymentFraudModelTrainer.Train();
             Console.WriteLine();
@@ -16,6 +18,7 @@ namespace FraudDetectionSystem.ML.Training
             ReturnOfferFraudModelTrainer.Train();
             Console.WriteLine();
             ValidationFraudModelTrainer.Train();
+
             Console.WriteLine("\nAll models trained successfully.");
         }
     }
