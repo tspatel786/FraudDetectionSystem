@@ -1,10 +1,3 @@
-using FraudDetectionSystem.ML.Common;
-using FraudDetectionSystem.ML.Models.Customer;
-using FraudDetectionSystem.ML.Models.Employee;
-using FraudDetectionSystem.ML.Models.Payment;
-using FraudDetectionSystem.ML.Models.ReturnOffer;
-using FraudDetectionSystem.ML.Models.Store;
-using FraudDetectionSystem.ML.Models.Validation;
 using FraudDetectionSystem.Models.Enum;
 
 namespace FraudDetectionSystem.Models.Dtos

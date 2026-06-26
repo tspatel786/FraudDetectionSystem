@@ -1,5 +1,4 @@
-﻿using FraudDetectionSystem.Models.Dtos;
-using FraudDetectionSystem.Services.Interface;
+﻿using FraudDetectionSystem.Services.Interface;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FraudDetectionSystem.Controllers

@@ -1,7 +1,5 @@
 ﻿using FraudDetectionSystem.Data;
 using FraudDetectionSystem.ML.Common;
-using FraudDetectionSystem.ML.Models.Customer;
-using FraudDetectionSystem.ML.Models.Employee;
 using FraudDetectionSystem.ML.Models.Payment;
 using FraudDetectionSystem.ML.Models.ReturnOffer;
 using FraudDetectionSystem.ML.Models.Store;
@@ -46,6 +44,7 @@ namespace FraudDetectionSystem.Services.Implementation
             _validationMl = validationMl;
         }
 
+        //This method will call then all 6 models will run
         public async Task<FraudDetectionResult> CheckAllAsync(FraudDetectionRequest request)
         {
             var result = new FraudDetectionResult();
