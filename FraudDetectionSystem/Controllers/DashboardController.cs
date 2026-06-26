@@ -23,18 +23,14 @@ namespace FraudDetectionSystem.Controllers
         }
 
         [HttpGet("fraud-report")]
-        public async Task<IActionResult> GetFraudReport(
-            [FromQuery] DateTime? from,
-            [FromQuery] DateTime? to)
+        public async Task<IActionResult> GetFraudReport([FromQuery] DateTime? from, [FromQuery] DateTime? to)
         {
             var result = await _dashboardService.GetFraudAlertsByDateRangeAsync(from, to);
             return Ok(result);
         }
 
         [HttpGet("fraud-summary")]
-        public async Task<IActionResult> GetFraudSummary(
-            [FromQuery] DateTime? from,
-            [FromQuery] DateTime? to)
+        public async Task<IActionResult> GetFraudSummary([FromQuery] DateTime? from, [FromQuery] DateTime? to)
         {
             var result = await _dashboardService.GetFraudSummaryReportAsync(from, to);
             return Ok(result);

@@ -2,10 +2,10 @@
 
 namespace FraudDetectionSystem.ML.Prediction
 {
-    public class StoreFraudPredictionService
-        : BaseMlPredictionService<StoreFraudData, StoreFraudPrediction>
+    public class StoreFraudPredictionService : BaseMlPredictionService<StoreFraudData, StoreFraudPrediction>
     {
-        public StoreFraudPredictionService()
-            : base("MLModels/storeFraudModel.zip") { }
+        public StoreFraudPredictionService() : base("MLModels/storeFraudModel.zip")
+        { 
+        }
     }
 }
