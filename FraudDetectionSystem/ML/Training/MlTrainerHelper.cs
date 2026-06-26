@@ -5,12 +5,29 @@ namespace FraudDetectionSystem.ML.Training
 {
     public static class MlTrainerHelper
     {
-        public static void SaveModel(ITransformer model, DataViewSchema schema, string modelPath, string name)
+        public static TrainingResult SaveModel(
+            ITransformer model,
+            DataViewSchema schema,
+            string modelPath,
+            string name,
+            int recordCount,
+            BinaryClassificationMetrics metrics)
         {
             Directory.CreateDirectory(Path.GetDirectoryName(modelPath)!);
             var mlContext = new MLContext(seed: 0);
             mlContext.Model.Save(model, schema, modelPath);
             Console.WriteLine($"{name} saved to {Path.GetFullPath(modelPath)}");
+
+            return new TrainingResult
+            {
+                ModelName = name,
+                ModelPath = modelPath,
+                RecordCount = recordCount,
+                Accuracy = (float)metrics.Accuracy,
+                Auc = (float)metrics.AreaUnderRocCurve,
+                F1Score = (float)metrics.F1Score,
+                Success = true
+            };
         }
 
         public static void PrintMetrics(BinaryClassificationMetrics metrics, string name)

@@ -19,7 +19,6 @@
     </PackageReference>
     <PackageReference Include="Microsoft.ML" Version="5.0.0" />
     <PackageReference Include="Microsoft.ML.FastTree" Version="5.0.0" />
-    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
   </ItemGroup>
 
@@ -29,9 +28,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Data\**\*.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="MLModels\**\*.zip" Condition="Exists('MLModels')">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

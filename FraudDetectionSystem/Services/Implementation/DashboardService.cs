@@ -13,9 +13,16 @@ namespace FraudDetectionSystem.Services.Implementation
             _dashboardRepository = dashboardRepository;
         }
 
-        public async Task<List<FraudAlertResponse>> GetFraudAlertsAsync()
-        {
-            return await _dashboardRepository.GetFraudAlertsAsync();
-        }
+        public Task<List<FraudAlertResponse>> GetFraudAlertsAsync() =>
+            _dashboardRepository.GetFraudAlertsAsync();
+
+        public Task<List<FraudAlertResponse>> GetFraudAlertsByDateRangeAsync(DateTime? from, DateTime? to) =>
+            _dashboardRepository.GetFraudAlertsByDateRangeAsync(from, to);
+
+        public Task<FraudSummaryReportDto> GetFraudSummaryReportAsync(DateTime? from, DateTime? to) =>
+            _dashboardRepository.GetFraudSummaryReportAsync(from, to);
+
+        public Task<List<MlTrainingHistoryResponse>> GetTrainingHistoryAsync() =>
+            _dashboardRepository.GetTrainingHistoryAsync();
     }
 }

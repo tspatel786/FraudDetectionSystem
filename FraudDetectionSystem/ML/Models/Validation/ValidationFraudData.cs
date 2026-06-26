@@ -4,16 +4,15 @@ namespace FraudDetectionSystem.ML.Models.Validation
 {
     public class ValidationFraudData
     {
-        [LoadColumn(0)] public float HourOfTransaction { get; set; }
-        [LoadColumn(1)] public float StoreOpenHour { get; set; }
-        [LoadColumn(2)] public float StoreCloseHour { get; set; }
-        [LoadColumn(3)] public float StoreType { get; set; }
-        [LoadColumn(4)] public float PreviousStoreType { get; set; }
-        [LoadColumn(5)] public float CustomerIsNew { get; set; }
-        [LoadColumn(6)] public float CrossStorePurchaseCount { get; set; }
-        [LoadColumn(7)] public float CrossStoreReturnCount { get; set; }
+        public float HourOfTransaction { get; set; }
+        public float StoreOpenHour { get; set; }
+        public float StoreCloseHour { get; set; }
+        public float StoreType { get; set; }
+        public float PreviousStoreType { get; set; }
+        public float CustomerIsNew { get; set; }
+        public float CrossStorePurchaseCount { get; set; }
+        public float CrossStoreReturnCount { get; set; }
 
-        [LoadColumn(8)]
         [ColumnName("Label")]
         public bool IsFraud { get; set; }
     }
