@@ -52,9 +52,9 @@ namespace FraudDetectionSystem.Services.Implementation
 
             try
             {
-                results.Add(await CheckCustomerBehaviorAsync(request));
+                results.Add(await CheckCustomerBehaviorAsync(request.CustomerId));
                 results.Add(await CheckPaymentAsync(request));
-                results.Add(await CheckEmployeeAsync(request));
+                results.Add(await CheckEmployeeAsync(request.EmployeeId));
                 results.Add(await CheckReturnOfferAsync(request));
                 results.Add(await CheckStoreAsync(request));
                 results.Add(await CheckValidationAsync(request));
@@ -77,9 +77,9 @@ namespace FraudDetectionSystem.Services.Implementation
             return result;
         }
 
-        private async Task<FraudModelResult> CheckCustomerBehaviorAsync(FraudDetectionRequest request)
+        public async Task<FraudModelResult> CheckCustomerBehaviorAsync(long customerId)
         {
-            var data = await _fraudData.GetCustomerBehaviorDataAsync(request.CustomerId);
+            var data = await _fraudData.GetCustomerBehaviorDataAsync(customerId);
             if (data == null)
                 return NotChecked(FraudType.CustomerBehavior);
 
@@ -105,7 +105,7 @@ namespace FraudDetectionSystem.Services.Implementation
                 prediction.Probability, flags);
         }
 
-        private async Task<FraudModelResult> CheckPaymentAsync(FraudDetectionRequest request)
+        public async Task<FraudModelResult> CheckPaymentAsync(FraudDetectionRequest request)
         {
             var customerName = await _fraudData.GetCustomerNameAsync(request.CustomerId);
             var nameMismatch = MlHelper.NameMismatchScore(
@@ -137,9 +137,9 @@ namespace FraudDetectionSystem.Services.Implementation
             return BuildResult(FraudType.Payment, prediction.IsFraud, prediction.Probability, flags);
         }
 
-        private async Task<FraudModelResult> CheckEmployeeAsync(FraudDetectionRequest request)
+        public async Task<FraudModelResult> CheckEmployeeAsync(long EmployeeId)
         {
-            var data = await _fraudData.GetEmployeeFraudDataAsync(request.EmployeeId);
+            var data = await _fraudData.GetEmployeeFraudDataAsync(EmployeeId);
             if (data == null)
                 return NotChecked(FraudType.Employee);
 
@@ -164,7 +164,7 @@ namespace FraudDetectionSystem.Services.Implementation
             return BuildResult(FraudType.Employee, prediction.IsFraud, prediction.Probability, flags);
         }
 
-        private async Task<FraudModelResult> CheckReturnOfferAsync(FraudDetectionRequest request)
+        public async Task<FraudModelResult> CheckReturnOfferAsync(FraudDetectionRequest request)
         {
             var returnCount = await _fraudData.GetCustomerReturnCountAsync(request.CustomerId);
             var returnValue = request.IsReturn ? (float)request.Amount : 0f;
@@ -197,7 +197,7 @@ namespace FraudDetectionSystem.Services.Implementation
             return BuildResult(FraudType.ReturnOffer, prediction.IsFraud, prediction.Probability, flags);
         }
 
-        private async Task<FraudModelResult> CheckStoreAsync(FraudDetectionRequest request)
+        public async Task<FraudModelResult> CheckStoreAsync(FraudDetectionRequest request)
         {
             var todaySales = await _fraudData.GetStoreTodaySalesAsync(request.StoreId);
             var todayReturns = await _fraudData.GetStoreTodayReturnsAsync(request.StoreId);
@@ -229,7 +229,7 @@ namespace FraudDetectionSystem.Services.Implementation
             return BuildResult(FraudType.StoreLevel, prediction.IsFraud, prediction.Probability, flags);
         }
 
-        private async Task<FraudModelResult> CheckValidationAsync(FraudDetectionRequest request)
+        public async Task<FraudModelResult> CheckValidationAsync(FraudDetectionRequest request)
         {
             var storeType = await _fraudData.GetStoreTypeAsync(request.StoreId);
 
