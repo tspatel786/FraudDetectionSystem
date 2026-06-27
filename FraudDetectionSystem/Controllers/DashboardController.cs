@@ -1,4 +1,5 @@
-﻿using FraudDetectionSystem.Services.Interface;
+﻿using FraudDetectionSystem.Models.Dtos;
+using FraudDetectionSystem.Services.Interface;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FraudDetectionSystem.Controllers
@@ -15,16 +16,18 @@ namespace FraudDetectionSystem.Controllers
         }
 
         [HttpGet("fraud-alerts")]
-        public async Task<IActionResult> GetFraudAlerts()
+        public async Task<IActionResult> GetFraudAlerts([FromQuery] FraudAlertFilter filter)
         {
-            var result = await _dashboardService.GetFraudAlertsAsync();
+            var result = await _dashboardService.GetFraudAlertsAsync(filter);
+
             return Ok(result);
         }
 
         [HttpGet("fraud-report")]
-        public async Task<IActionResult> GetFraudReport([FromQuery] DateTime? from, [FromQuery] DateTime? to)
+        public async Task<IActionResult> GetFraudReport([FromQuery] FraudAlertFilter filter)
         {
-            var result = await _dashboardService.GetFraudAlertsByDateRangeAsync(from, to);
+            var result = await _dashboardService.GetFraudAlertsByDateRangeAsync(filter);
+
             return Ok(result);
         }
 

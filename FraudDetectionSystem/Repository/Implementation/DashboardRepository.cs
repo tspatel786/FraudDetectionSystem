@@ -1,4 +1,5 @@
 ﻿using FraudDetectionSystem.Data;
+using FraudDetectionSystem.Models.Common;
 using FraudDetectionSystem.Models.Dtos;
 using FraudDetectionSystem.Models.Enum;
 using FraudDetectionSystem.Repository.Interface;
@@ -15,11 +16,24 @@ namespace FraudDetectionSystem.Repository.Implementation
             _context = context;
         }
 
-        public async Task<List<FraudAlertResponse>> GetFraudAlertsAsync()
+        public async Task<PagedResponse<FraudAlertResponse>> GetFraudAlertsAsync(FraudAlertFilter filter)
         {
-            return await _context.FraudAlerts
-                .Where(x => !x.Deleted)
+            var query = _context.FraudAlerts
+                .AsNoTracking()
+                .Where(x => !x.Deleted);
+
+            if (filter.From.HasValue)
+                query = query.Where(x => x.CreatedOn >= filter.From.Value);
+
+            if (filter.To.HasValue)
+                query = query.Where(x => x.CreatedOn <= filter.To.Value);
+
+            var totalRecords = await query.CountAsync();
+
+            var data = await query
                 .OrderByDescending(x => x.CreatedOn)
+                .Skip((filter.PageNumber - 1) * filter.PageSize)
+                .Take(filter.PageSize)
                 .Select(x => new FraudAlertResponse
                 {
                     Id = x.Id,
@@ -38,20 +52,35 @@ namespace FraudDetectionSystem.Repository.Implementation
                     CreatedOn = x.CreatedOn
                 })
                 .ToListAsync();
+
+            return new PagedResponse<FraudAlertResponse>
+            {
+                Data = data,
+                PageNumber = filter.PageNumber,
+                PageSize = filter.PageSize,
+                TotalRecords = totalRecords,
+                TotalPages = (int)Math.Ceiling(totalRecords / (double)filter.PageSize)
+            };
         }
 
-        public async Task<List<FraudAlertResponse>> GetFraudAlertsByDateRangeAsync(DateTime? from, DateTime? to)
+        public async Task<PagedResponse<FraudAlertResponse>> GetFraudAlertsByDateRangeAsync(FraudAlertFilter filter)
         {
-            var query = _context.FraudAlerts.Where(x => !x.Deleted);
+            var query = _context.FraudAlerts
+                .AsNoTracking()
+                .Where(x => !x.Deleted);
 
-            if (from.HasValue)
-                query = query.Where(x => x.CreatedOn >= from.Value);
+            if (filter.From.HasValue)
+                query = query.Where(x => x.CreatedOn >= filter.From.Value);
 
-            if (to.HasValue)
-                query = query.Where(x => x.CreatedOn <= to.Value);
+            if (filter.To.HasValue)
+                query = query.Where(x => x.CreatedOn <= filter.To.Value);
 
-            return await query
+            var totalRecords = await query.CountAsync();
+
+            var data = await query
                 .OrderByDescending(x => x.CreatedOn)
+                .Skip((filter.PageNumber - 1) * filter.PageSize)
+                .Take(filter.PageSize)
                 .Select(x => new FraudAlertResponse
                 {
                     Id = x.Id,
@@ -70,6 +99,15 @@ namespace FraudDetectionSystem.Repository.Implementation
                     CreatedOn = x.CreatedOn
                 })
                 .ToListAsync();
+
+            return new PagedResponse<FraudAlertResponse>
+            {
+                Data = data,
+                PageNumber = filter.PageNumber,
+                PageSize = filter.PageSize,
+                TotalRecords = totalRecords,
+                TotalPages = (int)Math.Ceiling(totalRecords / (double)filter.PageSize)
+            };
         }
 
         public async Task<FraudSummaryReportDto> GetFraudSummaryReportAsync(DateTime? from, DateTime? to)

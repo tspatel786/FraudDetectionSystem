@@ -1,4 +1,5 @@
-﻿using FraudDetectionSystem.Models.Dtos;
+﻿using FraudDetectionSystem.Models.Common;
+using FraudDetectionSystem.Models.Dtos;
 using FraudDetectionSystem.Repository.Interface;
 using FraudDetectionSystem.Services.Interface;
 
@@ -13,11 +14,9 @@ namespace FraudDetectionSystem.Services.Implementation
             _dashboardRepository = dashboardRepository;
         }
 
-        public Task<List<FraudAlertResponse>> GetFraudAlertsAsync() =>
-            _dashboardRepository.GetFraudAlertsAsync();
+        public Task<PagedResponse<FraudAlertResponse>> GetFraudAlertsAsync(FraudAlertFilter filter) => _dashboardRepository.GetFraudAlertsAsync(filter);
 
-        public Task<List<FraudAlertResponse>> GetFraudAlertsByDateRangeAsync(DateTime? from, DateTime? to) =>
-            _dashboardRepository.GetFraudAlertsByDateRangeAsync(from, to);
+        public Task<PagedResponse<FraudAlertResponse>> GetFraudAlertsByDateRangeAsync(FraudAlertFilter filter) => _dashboardRepository.GetFraudAlertsByDateRangeAsync(filter);
 
         public Task<FraudSummaryReportDto> GetFraudSummaryReportAsync(DateTime? from, DateTime? to) =>
             _dashboardRepository.GetFraudSummaryReportAsync(from, to);
